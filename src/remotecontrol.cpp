@@ -19,17 +19,27 @@
 //***************************************************************************************
 
 #include <msp430.h>
-//#include "uart.h"
+#include <stdint.h>
+
+#include "include/uart.h"
 #define LED_OUTPUT_BIT BIT0
 bool flag;
 
-void TimerAConfigure()
+
+/*
+ * Reset master timer attributes to default values
+ */
+void timer_deconfigure()
 {
-	TACCR0 = 1;
-	TACCTL0 = CCIE;
-	TACTL = TASSEL1 + MC0 + TAIE;
+    DCOCTL = 0x60;
+    BCSCTL1 = 0x87;
+    BCSCTL2 = 0x00;
+    BCSCTL3 = 0x04;
 }
 
+/*
+ * Configure master clock attributes
+ */
 void TimerConfigure()
 {
     WDTCTL = WDTPW + WDTHOLD;
@@ -43,6 +53,28 @@ void TimerConfigure()
     }
 }
 
+/*
+ * Configure Timer1 for dimming
+ */
+void TimerAConfigure()
+{
+	TA1CCR0 = 1;
+	TA1CCTL0 = CCIE;
+	TA1CTL = TASSEL1 + MC0 + TAIE;
+}
+
+/*
+ * Disable Timer1
+ */
+void TimerADisable()
+{
+	TA1CCTL0 &= ~CCIE;
+	TA1CTL &= ~TAIE;
+}
+
+/*
+ * Configure I/O for dimming
+ */
 void IoPinConfigure()
 {
     P1DIR |= LED_OUTPUT_BIT + BIT6; // Set P1.0 and P1.6 to output direction
@@ -50,22 +82,35 @@ void IoPinConfigure()
     //P1OUT |= BIT3;
 }
 
+/*
+ * Deconfigure I/O for dimming
+ */
+void IoPinDeconfigure()
+{
+    P1DIR &= ~(LED_OUTPUT_BIT + BIT6); // Clear P1.0 and P1.6
+    P1REN &= ~BIT3;
+}
+
 // Two ISRs to double the sample rate
-#pragma vector = TIMER0_A1_VECTOR
+#pragma vector = TIMER1_A1_VECTOR
 __interrupt void TimerA0ISR()
 {
-	// Read TAIV to clear the flag
-	TAIV = TAIV;
+	// Read TA1IV to clear the flag
+	TA1IV = TA1IV;
 	flag = false;
 }
 
-#pragma vector = TIMER0_A0_VECTOR
+#pragma vector = TIMER1_A0_VECTOR
 __interrupt void TimerA1ISR()
 {
-	// Read TAIV to clear the flag
-	TAIV = TAIV;
+	// Read TA1IV to clear the flag
+	TA1IV = TA1IV;
 	flag = false;
 }
+
+/*
+ * Software delay
+ */
 inline void delay(int i)
 {
 	for (volatile int j = 0; j < i; j++)
@@ -73,6 +118,9 @@ inline void delay(int i)
 	}
 }
 
+/*
+ * Software wait
+ */
 inline void wait(int bit)
 {
 	flag = true;
@@ -84,13 +132,17 @@ inline void wait(int bit)
 	}
 }
 
+/*
+ * Configure environment for dimming, send a dimming instruction, then undo
+ * configuration.
+ */
 void printSeq(int *numberList, int length)
 {
-	_disable_interrupt();
+	timer_deconfigure();
 	TimerConfigure();
 	TimerAConfigure();
 	IoPinConfigure();
-	_enable_interrupt();
+	_enable_interrupts();
 	for (int i = 0; i < length; i++)
 	{
 		P1OUT = (P1OUT&(~LED_OUTPUT_BIT))|((i+1)&1);
@@ -100,6 +152,10 @@ void printSeq(int *numberList, int length)
 			wait((i+1)&1);
 		}
 	}
+	_disable_interrupts();
+	timer_deconfigure();
+	TimerADisable();
+	IoPinDeconfigure();
 }
 
 void dimUp()
@@ -137,41 +193,60 @@ void remember()
 	printSeq(numberList, length);
 }
 
-
 int main(void)
 {
-	WDTCTL = WDTPW + WDTHOLD;             // Stop watchdog timer
+	WDTCTL = WDTPW + WDTHOLD; // Stop watchdog timer
+	uart_timer_configure();
+	uart_init();
+    _enable_interrupts();
 
-	int buttonCount = 0;
-	for (;;)
-	{
-		bool buttonpressed = !((P1IN&BIT3)>0);
-		if (buttonpressed)
-		{
-			buttonCount++;
-			for (int i = 0; i<10; i++)
-			{
-				switch (buttonCount%5)
-				{
-					case 0:
-						turnOn();
-						break;
-					case 1:
-						turnOff();
-						break;
-					case 2:
-						remember();
-						break;
-					case 3:
-						dimUp();
-						break;
-					case 4:
-						dimDown();
-						break;
-					default:
-						turnOff();
-				}
-			}
-		}
-	}
+    uart_puts("\n\r***************\n\r");
+    uart_puts("MSP430 SunV2\n\r");
+    uart_puts("***************\n\r\n\r");
+
+    uint8_t c;
+
+    // Timeshare between UART and dimming
+    while(1) {
+         if(uart_getc(&c)) {
+              if(c == '\r') {
+                   uart_putc('\n');
+                   uart_putc('\r');
+              } else {
+                   uart_putc('[');
+                   uart_putc(c);
+                   uart_putc(']');
+
+                   // Clear UART configuration
+                   _disable_interrupts();
+                   timer_deconfigure();
+                   uart_disable();
+                   uart_timerA_disable();
+				   switch (c)
+				   {
+						case 'w':
+							turnOn();
+							break;
+						case 's':
+							turnOff();
+							break;
+						case 'r':
+							remember();
+							break;
+						case 'd':
+							dimUp();
+							break;
+						case 'a':
+							dimDown();
+							break;
+				   }
+				  // UART configuration
+				  uart_init();
+               	  timer_deconfigure();
+				  uart_timer_configure();
+				  uart_timerA_enable();
+				  _enable_interrupts();
+              }
+         }
+    }
 }

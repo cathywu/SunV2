@@ -43,6 +43,13 @@
 void uart_init(void);
 
 /**
+ * Disable soft UART
+ */
+void uart_disable(void);
+
+void uart_timer_configure(void);
+
+/**
  * Read one character from UART non-blocking.
  *
  * @param[out]	*c	character received (if one was available)
@@ -63,6 +70,16 @@ void uart_putc(uint8_t c);
  * @param[in]	*str	the 0 terminated string to write
  */
 void uart_puts(const char *str);
+
+/*
+ * Disable Timer0
+ */
+void uart_timerA_disable(void);
+
+/*
+ * Enable Timer0
+ */
+void uart_timerA_enable(void);
 
 #endif
 

@@ -102,6 +102,26 @@ void uart_init(void)
      P1IE  |= RXD; 		// Enable RXD interrupt
 }
 
+/**
+ * Disable soft UART
+ */
+void uart_disable(void)
+{
+     P1SEL &= ~TXD;
+     P1DIR &= ~TXD;
+
+     P1IES &= ~RXD; 		// RXD Hi/lo edge interrupt
+     P1IFG &= ~RXD; 		// Clear RXD (flag) before enabling interrupt
+     P1IE  &= ~RXD; 		// Enable RXD interrupt
+}
+
+void uart_timer_configure()
+{
+    WDTCTL = WDTPW + WDTHOLD;
+    BCSCTL1 = CALBC1_1MHZ; 		// Set range
+    DCOCTL = CALDCO_1MHZ; 		// SMCLK = DCO = 1MHz
+}
+
 bool uart_getc(uint8_t *c)
 {
      if (!hasReceived) {
@@ -210,3 +230,18 @@ __interrupt void TimerA0_ISR()
      }
 }
 
+/*
+ * Disable Timer0
+ */
+void uart_timerA_disable()
+{
+	TACCTL0 &= ~CCIE;
+}
+
+/*
+ * Enable Timer0
+ */
+void uart_timerA_enable()
+{
+	TACCTL0 |= CCIE;
+}

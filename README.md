@@ -3,12 +3,12 @@ SunV2
 
 Dependencies
 -----------
-Code Composer Studio 5
-mspdebug [https://launchpad.net/ubuntu/quantal/+source/mspdebug]
+- Code Composer Studio 5
+- mspdebug [https://launchpad.net/ubuntu/quantal/+source/mspdebug]
 
 Quick start
 -----------
-$ mspdebug rf2500 'prog Sun_firmware.txt'
+- $ mspdebug rf2500 'prog Sun_firmware.txt'
 
 
 Flashing the TI MSP430 Launchpad via Code Composer Studio 5

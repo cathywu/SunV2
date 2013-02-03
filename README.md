@@ -17,15 +17,19 @@ Flashing the TI MSP430 Launchpad via Code Composer Studio 5
 ### Windows 7 or Linux (Ubuntu 12.04)
 - File > New > CCS Project
 - Family: MSP430, Variant: MSP430G2553, Empty Project
-- Add file: remotecontrol.cpp
 - Right click on project > Properties
     - Build > Advanced Options > Language Options > Enable "Treat C files as C++ files"
 
 ### Windows 7
+- Add file: remotecontrol.cpp
 - Load program: Run > Debug
 
 ### Linux
 - Right click on project > Properties
     - Build > Steps > Apply Predefined Step > TI-TXT
-- Load program via terminal: $ mspdebug rf2500 'prog \<PATH\_TO\_PROJECT\>/Debug/\<PROJECT\_NAME\>.txt'
+- $ cd \<REPO\_DIR\>
+- Add file: ln -s remotecontrol.cpp \<PATH\_TO\_PROJECT\>
+- Export binary: Project > Build All
+- Link binary to repo: ln \<PATH\_TO\_PROJECT\>/Debug/\<PROJECT\_NAME\>.txt Sun\_firmware.txt 
+- Load program via terminal: $ mspdebug rf2500 'prog Sun\_firmware.txt'
 

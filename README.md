@@ -4,6 +4,7 @@ SunV2
 Dependencies
 -----------
 Code Composer Studio 5
+mspdebug [https://launchpad.net/ubuntu/quantal/+source/mspdebug]
 
 Quick start
 -----------

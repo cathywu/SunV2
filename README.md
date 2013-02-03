@@ -8,7 +8,7 @@ Dependencies
 
 Quick start
 -----------
-- $ mspdebug rf2500 'prog Sun_firmware.txt'
+- $ mspdebug rf2500 'prog Sun\_firmware.txt'
 
 
 Flashing the TI MSP430 Launchpad via Code Composer Studio 5
@@ -27,5 +27,5 @@ Flashing the TI MSP430 Launchpad via Code Composer Studio 5
 ### Linux
 - Right click on project > Properties
     - Build > Steps > Apply Predefined Step > TI-TXT
-- Load program via terminal: $ mspdebug rf2500 'prog <PATH_TO_PROJECT>/Debug/<PROJECT_NAME>.txt'
+- Load program via terminal: $ mspdebug rf2500 'prog \<PATH\_TO\_PROJECT\>/Debug/\<PROJECT\_NAME\>.txt'
 

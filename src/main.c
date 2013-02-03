@@ -12,7 +12,7 @@
 #include <msp430.h>
 #include <stdint.h>
 
-#include "uart.h"
+#include "include/uart.h"
 
 /**
  * Main routine

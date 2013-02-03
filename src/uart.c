@@ -32,10 +32,10 @@
  ******************************************************************************/
 
 #include <msp430.h>
-#include <legacymsp430.h>
+// #include <legacymsp430.h>
 #include <stdbool.h>
 
-#include "uart.h"
+#include "include/uart.h"
 
 /**
  * TXD on P1.1
@@ -144,7 +144,8 @@ void uart_puts(const char *str)
 /**
  * ISR for RXD
  */
-interrupt(PORT1_VECTOR) PORT1_ISR(void)
+#pragma vector=PORT1_VECTOR
+interrupt void PORT1_ISR()
 {
      isReceiving = true;
 
@@ -163,7 +164,8 @@ interrupt(PORT1_VECTOR) PORT1_ISR(void)
 /**
  * ISR for TXD and RXD
  */
-interrupt(TIMERA0_VECTOR) TIMERA0_ISR(void)
+#pragma vector = TIMER0_A0_VECTOR
+__interrupt void TimerA0_ISR()
 {
      if(!isReceiving) {
           CCR0 += BIT_TIME; 						// Add Offset to CCR0

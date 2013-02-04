@@ -24,7 +24,7 @@ def dim_on(ser,count=1,delay=None):
         if delay:
             sleep(delay)
 
-def dim_off(ser):
+def dim_off(ser,count=1,delay=None):
     for i in range(count):
         ser.write(DIMOFF)
         if delay:

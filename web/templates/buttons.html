@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body>
+
+<script>
+var $SCRIPT_ROOT = {{request.script_root|tojson|safe}};
+var baseurl = $SCRIPT_ROOT
+function dimOn()
+{
+$('.status').text('Dimming on...')
+$.get(
+    baseurl + "/dimon",
+    {},
+    function(data) {
+        $('.status').text(data)
+    }
+);
+}
+
+function dimOff()
+{
+$('.status').text('Dimming off...')
+$.get(
+    baseurl + "/dimoff",
+    {},
+    function(data) {
+        $('.status').text(data)
+    }
+);
+}
+
+
+function turnOn()
+{
+$.get(
+    baseurl + "/turnon",
+    {},
+    function(data) {
+        $('.status').text(data)
+    }
+);
+}
+
+function turnOff()
+{
+$.get(
+    baseurl + "/turnoff",
+    {},
+    function(data) {
+        $('.status').text(data)
+    }
+);
+}
+
+function demo()
+{
+$('.status').text('Demo!')
+$.get(
+    baseurl + "/demo",
+    {},
+    function(data) {
+    }
+);
+}
+
+function getSunriseTime()
+{
+$.get(
+    baseurl + "/sunriseTime",
+    {},
+    function(data) {
+        $('.sunrise').text("The sun will rise at: " + data)
+    }
+);
+}
+</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<img class="sun" src="{{ url_for('static', filename='sun.png') }}"/>
+<div class="title">The Sun v2</div>
+
+<div class="status"></div>
+
+<div class="buttons">
+<a onclick="dimOn()">Dim on</a>
+
+<a onclick="dimOff()">Dim off</a>
+
+<a onclick="turnOn()">Turn on</a>
+
+<a onclick="turnOff()">Turn off</a>
+ 
+<a onclick="demo()">Demo</a>
+
+<a onclick="getSunriseTime()">Get Sunrise Time</a>
+</div>
+
+<div class="sunrise"></div>
+
+</body>
+
+
+</html>

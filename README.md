@@ -1,7 +1,7 @@
 SunV2: a sunrise when you want one
 ===========
 
-We've made a better version of the sun, one that rises on command, does not disappear like the Boston sun, and can be custom tailored to any night-shifted college student's schedule. It is essentially a light dimmer that talks to your computer, and it determines the best time to rise based on a Google Calendar. SunV2 slowly dims a light on as to emulate sunrise.
+We've made a better version of the sun, one that rises on command, does not disappear like the Boston sun, and can be custom tailored to any night-shifted college student's schedule. It is essentially a light dimmer that talks to your computer, and it determines the best time to rise based on your Google Calendar. SunV2 slowly dims a light on as to emulate sunrise.
 
 Hardware
 -----------
@@ -32,6 +32,7 @@ Quick start
 - To run the demo web interface: $ `python web/demo.py`
     - Then, navigate to localhost
 - To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ `python web/Sun.py`
+    - You may want to do this once regardless, to authenticate your Google account
 
 Flashing the Launchpad via Code Composer Studio 5 (development setup)
 -----------

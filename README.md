@@ -29,7 +29,7 @@ Quick start
 - To check the log for errors: $ `tail -f <PATH_TO_REPO>/log.log`
 - To run the demo web interface: $ `python web/demo.py`
     - Then, navigate to localhost
-- To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ python web/Sun.py
+- To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ `python web/Sun.py`
 
 Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing the firmware)
 -----------
@@ -42,11 +42,11 @@ Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing 
 ### Ubuntu (keeps CCS project and repository in sync)
 - Right click on project > Properties
     - Build > Steps > Apply Predefined Step > TI-TXT
-- $ cd \<REPO\_DIR\>
-- Add code: $ ln -s src/ \<PATH\_TO\_PROJECT\>/src
+- $ `cd \<REPO\_DIR\>`
+- Add code: $ `ln -s src/ \<PATH\_TO\_PROJECT\>/src`
 - Export binary: Project > Build All
-- Link binary to repo: $ ln \<PATH\_TO\_PROJECT\>/Debug/\<PROJECT\_NAME\>.txt bin/Sun\_firmware.txt 
-- Load program via terminal: $ mspdebug rf2500 'prog bin/Sun\_firmware.txt'
+- Link binary to repo: $ `ln \<PATH\_TO\_PROJECT\>/Debug/\<PROJECT\_NAME\>.txt bin/Sun\_firmware.txt`
+- Load program via terminal: $ `mspdebug rf2500 'prog bin/Sun\_firmware.txt'`
 
 ### Windows 7 (will need to copy files back to repo)
 - Add code: src/

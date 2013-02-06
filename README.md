@@ -1,6 +1,8 @@
 SunV2
 ===========
 
+<PROJECT DESCRIPTION HERE Basically it's "a sunrise when you want one." It's a light dimmer that is controlled by you via the internet (in this case, via Google Calendar).>
+
 Hardware
 -----------
 - Lutron IR Dimmer with IR Receiver [http://www.amazon.com/Lutron-MIR-600THW-WH-600-Watt-Infrared-Receiver/dp/B000JJYJMM/]

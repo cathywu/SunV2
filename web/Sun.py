@@ -15,6 +15,9 @@ import os
 # Sun v2 is a better sun. It is an alarm clock application that emulates the
 # rising of the sun at your convenience. It integrates with Google Calendar
 # to figure out the best time to wake you each morning.
+#
+# This is the Google Calendar integration code, which authenticates with gCal,
+# pulls relevant calendar events, and sets a "sunrise" time
 # 
 # @author cathywu
 # @date 2012-10-03

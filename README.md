@@ -46,7 +46,7 @@ Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing 
 - Add code: $ `ln -s src/ <PATH_TO_PROJECT>/src`
 - Export binary: Project > Build All
 - Link binary to repo: $ `ln <PATH_TO_PROJECT>/Debug/<PROJECT_NAME>.txt bin/Sun_firmware.txt`
-- Load program via terminal: $ `mspdebug rf2500 'prog bin/Sun\_firmware.txt'`
+- Load program via terminal: $ `mspdebug rf2500 'prog bin/Sun_firmware.txt'`
 
 ### Windows 7 (will need to copy files back to repo)
 - Add code: src/

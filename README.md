@@ -31,13 +31,17 @@ Quick start
 - Make the Sun executable: $ `chmod u+x web/interface.py`
 - Run the Sun regularly: $ `crontab -e`
     - Add the line: `*/5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log`
+- Run the Sun script once, to authenticate your Google account: $ `python web/Sun.py`
+- Make sure that the `src/calendar.dat` file is readable and writeable: $ `chmod a+rw src/calendar.dat`
+
+Troubleshooting / Other features
+-----------
 - To check the log for errors: $ `tail -f <PATH_TO_REPO>/log.log`
 - To manually remote control the dimmer: $ `screen /dev/ttyACM0 9600`
     - Use keys ASDW to control the dimmer
 - To run the demo web interface: $ `python web/demo.py`
     - Then, navigate to localhost and click buttons to control the dimmer
 - To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ `python web/Sun.py`
-    - You may want to do this once regardless, to authenticate your Google account
 
 Flashing the Launchpad via Code Composer Studio 5 (development setup)
 -----------

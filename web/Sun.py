@@ -27,7 +27,7 @@ class Sun:
         self.service = self.authenticate()
         self.tz = self.get_tz()
         self.wake_time = self.load_alarm_time(\
-                default=datetime.combine(datetime.today(), time(12,0)))
+                default=datetime.combine(datetime.today(), time(16,0)))
 
         # update time, in case of failure, will use stored time
         try:
@@ -87,10 +87,15 @@ class Sun:
         import os
         if not os.path.isfile(STORAGE):
             return default
+        # check for unupdated alarm time (perhaps from loss of internet conn)
         if abs(datetime.fromtimestamp(os.path.getmtime(STORAGE))-datetime.now()) \
                 > timedelta(hours=18):
             return default
-        return pickle.load(open(STORAGE))
+        alarm_time = pickle.load(open(STORAGE))
+        # check for stale alarm time (from yesterday, etc.)
+        if alarm_time < datetime.combine(datetime.today(), time(0,0)):
+            return default
+        return alarm_time
 
     def save_alarm_time(self):
         out = open(STORAGE, 'w')
@@ -129,15 +134,15 @@ class Sun:
                 # check if we have found the rise and shine event for today
                 if event['summary'] == 'rise and shine' and start.date() == \
                         datetime.today().date():
-                    self.wake_time = start
+                    self.wake_time = start - timedelta(minutes=30)
                     print "RISE AND SHINE: %s" % self.wake_time
                     return self.wake_time
                 # for events that are today, check if it's earlier than what we
                 # have recorded for wake_time
                 if start.date() == datetime.today().date():
                     if start < self.wake_time:
-                        self.wake_time = start
-                        print "NEW WAKE TIME: %s" % self.wake_time
+                        self.wake_time = start - timedelta(minutes=30)
+                        print "NEW SUNRISE TIME: %s" % self.wake_time
         self.save_alarm_time()
         return self.wake_time
 

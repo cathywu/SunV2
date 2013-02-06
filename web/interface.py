@@ -1,5 +1,5 @@
 import serial
-from Sun import Sun
+from Sun import Sun, PWD
 from datetime import datetime, timedelta
 from time import sleep
 
@@ -9,8 +9,25 @@ DIMON = 'd'
 DIMOFF = 'a'
 REMEMBER = 'r'
 
+def acquire():
+    fname = "%s/calendar.lock" % PWD
+    import os
+    if os.path.exists(fname):
+        return False
+    open(fname,'w').close()
+    return True
+
+def release():
+    fname = "%s/calendar.lock" % PWD
+    import os
+    os.remove(fname)
+
 def connect():
     return serial.Serial('/dev/ttyACM0',9600,timeout=1)
+
+def disconnect(ser):
+    ser.close()
+    release()
 
 def turn_on(ser):
     ser.write(TURNON)
@@ -38,6 +55,9 @@ if __name__ == "__main__":
     wake_time = sun.wake_time
     print wake_time
     if datetime.now() > wake_time and datetime.now() < wake_time + timedelta(minutes=30):
-        s = connect()
-        dim_on(s,count=20,delay=1)
-        sleep(5*60)
+        if not acquire():
+            print "Locked"
+        else:
+            s = connect()
+            dim_on(s,count=20,delay=90)
+            disconnect()

@@ -1,21 +1,16 @@
 //***************************************************************************************
-//  MSP430 Blink the LED Demo - Software Toggle P1.0
+//  MSP430 Lutron IR Dimmer Remote Control
 //
-//  Description; Toggle P1.0 by xor'ing P1.0 inside of a software loop.
-//  ACLK = n/a, MCLK = SMCLK = default DCO
+//  Description: Operate the dimmer from your computer.
 //
-//                MSP430x5xx
-//             -----------------
-//         /|\|              XIN|-
-//          | |                 |
-//          --|RST          XOUT|-
-//            |                 |
-//            |             P1.0|-->LED
+//  Usage:
+//  - Flash the firmware
+//  - Make sure the IR LED is within a few feet and pointed at the IR reciever
+//    of the dimmer
+//  - $ screen /dev/ttyACM0 9600
+//  - Use keys ASDW to control the dimmer
 //
-//  J. Stevenson
-//  Texas Instruments, Inc
-//  July 2011
-//  Built with Code Composer Studio v5
+//  @author jasondu, cathywu
 //***************************************************************************************
 
 #include <msp430.h>
@@ -24,7 +19,6 @@
 #include "include/uart.h"
 #define LED_OUTPUT_BIT BIT0
 bool flag;
-
 
 /*
  * Reset master timer attributes to default values
@@ -208,45 +202,45 @@ int main(void)
 
     // Timeshare between UART and dimming
     while(1) {
-         if(uart_getc(&c)) {
-              if(c == '\r') {
-                   uart_putc('\n');
-                   uart_putc('\r');
-              } else {
-                   uart_putc('[');
-                   uart_putc(c);
-                   uart_putc(']');
-
-                   // Clear UART configuration
-                   _disable_interrupts();
-                   timer_deconfigure();
-                   uart_disable();
-                   uart_timerA_disable();
-				   switch (c)
-				   {
-						case 'w':
-							turnOn();
-							break;
-						case 's':
-							turnOff();
-							break;
-						case 'r':
-							remember();
-							break;
-						case 'd':
-							dimUp();
-							break;
-						case 'a':
-							dimDown();
-							break;
-				   }
-				  // UART configuration
-				  uart_init();
-               	  timer_deconfigure();
-				  uart_timer_configure();
-				  uart_timerA_enable();
-				  _enable_interrupts();
-              }
-         }
+        if(uart_getc(&c)) {
+            if(c == '\r') {
+                 uart_putc('\n');
+                 uart_putc('\r');
+            } else {
+                uart_putc('[');
+                uart_putc(c);
+                uart_putc(']');
+            
+                // Clear UART configuration
+                _disable_interrupts();
+                timer_deconfigure();
+                uart_disable();
+                uart_timerA_disable();
+                switch (c)
+                {
+                    case 'w':
+                        turnOn();
+                        break;
+                    case 's':
+                        turnOff();
+                        break;
+                    case 'r':
+                        remember();
+                        break;
+                    case 'd':
+                        dimUp();
+                        break;
+                    case 'a':
+                        dimDown();
+                        break;
+                }
+                // UART configuration
+                art_init();
+                timer_deconfigure();
+                uart_timer_configure();
+                uart_timerA_enable();
+                _enable_interrupts();
+            }
+        }
     }
 }

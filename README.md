@@ -23,14 +23,19 @@ Software
 Quick start
 -----------
 - Make sure you have the above hardware and have installed the above software
+- Connect the positive end of the LED to Pin P1.0 (LED1) and the negative end of the LED to GND
+- Make sure the IR LED is within a few feet and pointed at the IR reciever
+  of the dimmer
 - Plug in the LaunchPad via USB
 - Flash the firmware: $ `mspdebug rf2500 'prog Sun_firmware.txt'`
 - Make the Sun executable: $ `chmod u+x web/interface.py`
 - Run the Sun regularly: $ `crontab -e`
     - Add the line: `*/5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log`
 - To check the log for errors: $ `tail -f <PATH_TO_REPO>/log.log`
+- To manually remote control the dimmer: $ `screen /dev/ttyACM0 9600`
+    - Use keys ASDW to control the dimmer
 - To run the demo web interface: $ `python web/demo.py`
-    - Then, navigate to localhost
+    - Then, navigate to localhost and click buttons to control the dimmer
 - To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ `python web/Sun.py`
     - You may want to do this once regardless, to authenticate your Google account
 

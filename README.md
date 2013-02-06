@@ -22,10 +22,10 @@ Quick start
 -----------
 - Make sure you have the above hardware and have installed the above software
 - Plug in the LaunchPad via USB
-- $ `mspdebug rf2500 'prog Sun\_firmware.txt'`
-- $ `chmod u+x web/interface.py`
-- $ `crontab -e`
-- Add the line: `*/5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log`
+- Flash the firmware: $ `mspdebug rf2500 'prog Sun\_firmware.txt'`
+- Make the Sun executable: $ `chmod u+x web/interface.py`
+- Run the Sun regularly: $ `crontab -e`
+    - Add the line: `*/5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log`
 - To check the log for errors: $ `tail -f <PATH_TO_REPO>/log.log`
 - To run the demo web interface: $ `python web/demo.py`
     - Then, navigate to localhost

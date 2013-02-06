@@ -1,3 +1,10 @@
+# Interface between UART firmware, the Google Calendar, and the demo website
+# 
+# Usage: python interface.py
+# But better to run this via cron or demo website
+# 
+# @author cathywu
+
 import serial
 from Sun import Sun, PWD
 from datetime import datetime, timedelta

@@ -1,3 +1,10 @@
+# Demo website for SunV2
+# 
+# Usage: python demo.py
+# Click buttons to demonstrate the various functions
+#
+# @author micaelawiseman, cathywu
+
 from flask import Flask
 from flask import render_template
 import interface

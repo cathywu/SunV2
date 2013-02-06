@@ -54,3 +54,8 @@ Flashing the Launchpad via Code Composer Studio 5 (development setup)
 - Add code: src/
 - Load program: Run > Debug
 
+References
+-----------
+PySerial [http://pyserial.sourceforge.net/shortintro.html]
+Software UART on the MSP430 [https://github.com/wendlers/msp430-softuart]
+Pin reference for the Launchpad [https://github.com/energia/Energia/wiki/Hardware#wiki-LaunchPad_MSP430G2553]

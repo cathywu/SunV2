@@ -23,7 +23,8 @@ Quick start
 - $ mspdebug rf2500 'prog Sun\_firmware.txt'
 - $ chmod u+x web/interface.py
 - $ crontab -e
-- Add the line: */5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py
+- Add the line: */5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log
+- To check the log for errors: $ tail -f <PATH_TO_REPO>/log.log
 
 Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing the firmware)
 -----------

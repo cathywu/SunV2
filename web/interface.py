@@ -1,6 +1,6 @@
 import serial
 from Sun import Sun
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
 
 TURNON = 'w'
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     sun = Sun()
     wake_time = sun.wake_time
     print wake_time
-    while datetime.now() < wake_time:
-        sleep(10)
-    s = connect()
-    dim_on(s,count=20,delay=1)
+    if datetime.now() > wake_time and datetime.now() < wake_time + timedelta(minutes=30):
+        s = connect()
+        dim_on(s,count=20,delay=1)
+        sleep(5*60)

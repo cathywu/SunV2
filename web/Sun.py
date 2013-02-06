@@ -130,7 +130,7 @@ class Sun:
                 if event['summary'] == 'rise and shine' and start.date() == \
                         datetime.today().date():
                     self.wake_time = start
-                    print "WAKE TIME: %s" % self.wake_time
+                    print "RISE AND SHINE: %s" % self.wake_time
                     return self.wake_time
                 # for events that are today, check if it's earlier than what we
                 # have recorded for wake_time

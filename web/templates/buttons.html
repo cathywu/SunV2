@@ -68,6 +68,7 @@ $.get(
 
 function getSunriseTime()
 {
+$('.sunrise').text("The sun will rise at...")
 $.get(
     baseurl + "/sunriseTime",
     {},
@@ -92,9 +93,9 @@ $.get(
 
 <a onclick="turnOff()">Turn off</a>
  
-<a onclick="demo()">Demo</a>
-
 <a onclick="getSunriseTime()">Get Sunrise Time</a>
+
+<a onclick="demo()">Demo</a>
 </div>
 
 <div class="sunrise"></div>

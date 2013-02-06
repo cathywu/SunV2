@@ -31,7 +31,7 @@ Quick start
     - Then, navigate to localhost
 - To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ `python web/Sun.py`
 
-Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing the firmware)
+Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (development setup)
 -----------
 ### Windows 7 or Ubuntu 12.04
 - File > New > CCS Project

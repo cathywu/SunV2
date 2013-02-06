@@ -25,6 +25,9 @@ Quick start
 - $ crontab -e
 - Add the line: */5 * * * 1-5 python <PATH_TO_REPO>/web/interface.py >> <PATH_TO_REPO>/log.log
 - To check the log for errors: $ tail -f <PATH_TO_REPO>/log.log
+- To run the demo web interface: $ python web/demo.py
+    - Then, navigate to localhost
+- To just check your Google Calendar "sunrise" time without controlling any lights, just run: $ python web/Sun.py
 
 Flashing the TI MSP430 Launchpad via Code Composer Studio 5 (setup for changing the firmware)
 -----------

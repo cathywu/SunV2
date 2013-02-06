@@ -1,7 +1,7 @@
-SunV2
+SunV2: a sunrise when you want one
 ===========
 
-<PROJECT DESCRIPTION HERE Basically it's "a sunrise when you want one." It's a light dimmer that is controlled by you via the internet (in this case, via Google Calendar).>
+We've made a better version of the sun, one that rises on command, does not disappear like the Boston sun, and can be custom tailored to any night-shifted college student's schedule. It is essentially a light dimmer that talks to your computer, and it determines the best time to rise based on a Google Calendar. SunV2 slowly dims a light on as to emulate sunrise.
 
 Hardware
 -----------
@@ -59,3 +59,7 @@ References
 - Pin reference for the Launchpad [https://github.com/energia/Energia/wiki/Hardware#wiki-LaunchPad_MSP430G2553]
 - Software UART on the MSP430 [https://github.com/wendlers/msp430-softuart]
 - PySerial [http://pyserial.sourceforge.net/shortintro.html]
+
+Feature requests
+-----------
+- Rain dance: to make the sun go away (snooze)
